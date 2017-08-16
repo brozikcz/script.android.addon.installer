@@ -4,7 +4,7 @@ Android native addon installer for Kodi
 Usage: 
 <ul>
 <li>extract the target addon from zip to resources/addon</li>
-<li>create zip from whole directory script.android.addon.installer</li>
+<li>create zip: zip -FS -q -r script.android.addon.installer.zip script.android.addon.installer -x "*.py[oc] *.sw[onp]" ".*"</li>
 <li>install to Kodi, run, restart and manually enable the addon</li>
 </ul>
 
