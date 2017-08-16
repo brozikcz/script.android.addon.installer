@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<addon id="script.android.addon.installer" name="Android addon installer" provider-name="BrozikCZ" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+         <provides>executable</provides>
+     </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Android addon installer</summary>
+    <summary lang="cs">Android addon instalátor</summary>
+    <platform>android</platform>
+  </extension>
+</addon>
