@@ -23,6 +23,7 @@ import os
 import xbmcaddon
 import xbmcgui
 import shutil
+import json 
 
 __script_id__ = xbmcaddon.Addon().getAddonInfo('id')
 __addon__ = xbmcaddon.Addon(id=__script_id__)
@@ -39,13 +40,24 @@ def copy_dir(src, dst):
         return False
     return True
 
+def refresh_addon_library():
+    xbmc.executebuiltin('UpdateLocalAddons', True)
+
+def enable_addon():
+    refresh_addon_library()
+
+    cmd = '{{"jsonrpc": "2.0", "id":1, "method": "Addons.SetAddonEnabled", "params": {{ "addonid": "{}", "enabled": true }}}}'.format(__addon_to_extract__)
+    response = xbmc.executeJSONRPC(cmd)
+    json_response = json.loads(response.decode('utf-8','replace'))
+    return json_response.has_key('result') and json_response['result'] == 'OK'
+
 def exit():
-        xbmc.executebuiltin("XBMC.Container.Update(path,replace)")
-        xbmc.executebuiltin("XBMC.ActivateWindow(Home)")
+    xbmc.executebuiltin('XBMC.Container.Update(path,replace)')
+    xbmc.executebuiltin('XBMC.ActivateWindow(Home)')
 
-result = copy_dir(__addon_to_extract_path__, "/data/user/0/org.xbmc.kodi/cache/apk/assets/addons/{}".format(__addon_to_extract__));
+result_copy = copy_dir(__addon_to_extract_path__, '/data/user/0/org.xbmc.kodi/cache/apk/assets/addons/{}'.format(__addon_to_extract__));
 
-if result:
+if result_copy and enable_addon():
     xbmcgui.Dialog().ok(__addon_to_extract__, __addon__.getLocalizedString(1))
 else:
     xbmcgui.Dialog().ok(__addon_to_extract__, __addon__.getLocalizedString(2))
